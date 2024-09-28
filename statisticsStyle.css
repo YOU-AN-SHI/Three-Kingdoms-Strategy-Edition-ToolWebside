@@ -1,0 +1,238 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    background-color: #35424a; /* 背景顏色 */
+    color: #ffffff;
+    padding: 20px;
+    font-size: 24px;
+    text-align: left; /* 將標題文字左對齊 */
+    height: 80px; /* 調整標題欄高度 */
+}
+nav {
+    background-color: #d3d3d3; /* 左側導航欄的背景顏色 */
+    padding: 20px;
+    width: 200px; /* 導航欄的寬度 */
+    flex-shrink: 0; /* 防止導航欄被縮小 */
+    transition: width 0.3s ease; /* 添加過渡效果 */
+    position: relative; /* 設置相對位置 */
+}
+nav.collapsed {
+    width: 60px; /* 收合後的導航欄寬度 */
+}
+nav a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 0;
+}
+nav a.active {
+    background-color: #808080; /* 點擊時的背景顏色 */
+    color: #fff;
+}
+.toggle-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+main {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f4f4f4; /* 主內容區的背景色 */
+}
+
+.breadcrumbs {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* 上傳、下載檔案*/
+.upload-download-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    flex: 1;
+    text-align: left; /* 使上傳按鈕靠左 */
+}
+.download-section {
+    text-align: right; /* 下載按鈕靠右*/
+}
+
+.upload-section input[type="button"],
+.download-section input[type="button"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #69cece;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/*滑鼠懸停改變"上傳檔案"按鈕背景顏色*/
+.upload-section input[type="button"]:hover,
+.download-section input[type="button"]:hover {
+    background-color: #54b1b1;
+}
+
+.table-container {
+    overflow-x: auto; /* 使表格在小螢幕上可以滾動 */
+    background-color: #ffffff; /* 表格區域的背景色 */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加陰影 */
+    border-radius: 10px; /* 圓角邊框 */
+}
+
+.attendanceList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendanceList th, .attendanceList td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.attendanceList th {
+    background-color: #69cece;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.attendanceList tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/*按鈕列*/
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-buttons, .right-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.left-buttons button, .right-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 10px;
+    background-color: #69cece;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.left-buttons button:hover, .right-buttons button:hover {
+    background-color: #54b1b1;
+}
+
+.analysis-container {
+    display: flex;
+    align-items: center;
+}
+
+.analysis-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.analysis-container label {
+    font-size: 16px;
+    color: #333;
+}
+
+/* 紀錄表上方區域*/
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.table-title {
+    font-size: 20px;
+    font-weight: bold;
+    flex: 1;
+}
+
+.standards {
+    display: flex;
+    gap: 10px;
+}
+
+.display-mode {
+    cursor: pointer;
+}
+
+.edit-mode {
+    display: none;
+}
+
+.date-time {
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.date-time .display-mode {
+    cursor: pointer;
+}
+
+/* 編輯時將紀錄時間的文字隱藏*/
+.date-time.editing .display-mode {
+    display: none;
+}
+
+/*分析圖表*/
+#analysisChart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#pieChartAndListContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start; /* 垂直对齐到顶部 */
+}
+
+#attendanceRate,
+#siegeNum {
+    flex: 1;
+    box-sizing: border-box; /* 包含內邊距和邊框的計算 */
+    margin: 20px; /* 設定間距 */
+}
+
+#playerLists {
+    flex: 1; /* 使玩家列表占据可用空间 */
+    min-width: 300px; /* 設置最小寬度 */
+    margin-top: 20px; /* 設定上方間距 */
+}
+
+/* 当屏幕宽度小于1236px时，调整布局 */
+@media (max-width: 1286px) { /* pieChart 650px + margin 20px + playerLists 300px + 導航欄 316px = 1286px */
+    #playerLists {
+        margin-top: 0; /* 換行時移除上方間距 */
+        margin: 20px; /* 換行時左側加上margin */
+    }
+}

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理小助手</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #35424a; /* 背景顏色 */
+            color: #ffffff;
+            padding: 20px;
+            font-size: 24px;
+            text-align: left; /* 將標題文字左對齊 */
+            height: 80px; /* 調整標題欄高度 */
+        }
+        nav {
+            background-color: #d3d3d3; /* 左側導航欄的背景顏色 */
+            padding: 20px;
+            width: 200px; /* 導航欄的寬度 */
+            flex-shrink: 0; /* 防止導航欄被縮小 */
+            transition: width 0.3s ease; /* 添加過渡效果 */
+            position: relative; /* 設置相對位置 */
+        }
+        nav.collapsed {
+            width: 60px; /* 收合後的導航欄寬度 */
+        }
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            padding: 10px 0;
+        }
+        nav a.active {
+            background-color: #808080; /* 點擊時的背景顏色 */
+            color: #fff;
+        }
+        .toggle-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        /* 隱藏子選項 */
+        ul.sub-menu {
+            display: none;
+        }
+        /* 顯示子選項 */
+        ul.active {
+            display: block;
+        }
+        .city-link {
+            text-decoration: underline; /* 顯示底線 */
+            color: #333; /* 調整顏色 */
+        }
+
+        .city-link:hover {
+            cursor: pointer; /* 滑鼠移上去時顯示手型 */
+            color: #007bff; /* 滑鼠移上去時改變顏色（可選） */
+        }
+    </style>
+    <!-- 導入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        管理小助手
+    </header>
+    <div style="display: flex; flex-direction: row; flex-grow: 1;">
+        <nav id="sidebar">
+            <a href="#">首頁</a>
+            <a href="#">攻城行事曆</a>
+            <a href="#">隊伍紀錄</a>
+            <a href="#">戰況紀錄</a>
+            <a href="#" class="active">盟友出席率</a>
+            <div class="toggle-button" onclick="toggleNav()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M3 12l8-8h4l9 8-9 8h-4l-8-8zm5.54 5L11 15.46l5.54-5.54L16 10l-5 5-3-3z"/>
+                </svg>
+            </div>
+        </nav>
+        <main>
+            <!-- 主要內容 -->
+        </main>
+    </div>
+    
+    <script>
+        function toggleNav() {
+            const nav = document.getElementById('sidebar');
+            nav.classList.toggle('collapsed');
+        }
+
+        const navLinks = document.querySelectorAll('nav a');
+
+        // 網頁內容
+        const pageHTML = {
+            '首頁': `
+                <h1>歡迎來到管理小助手首頁</h1>
+                <p>這裡是首頁的內容。</p>
+            `,
+            '攻城行事曆': `
+                <h1>攻城行事曆</h1>
+                <p>這裡是攻城行事曆的內容。</p>
+            `,
+            '隊伍紀錄': `
+                <h1>隊伍紀錄</h1>
+                <p>這裡是隊伍紀錄的內容。</p>
+            `,
+            '戰況紀錄': `
+                <h1>戰況紀錄</h1>
+                <p>這裡是戰況紀錄的內容。</p>
+            `,
+            '盟友出席率': `
+                <h1>您目前所在的地圖是:北定中原</h1>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#" onclick="initializeSubMenu(event)">漢中</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">南鄭縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="漢中" data-county="南鄭縣" data-city="Lv.10南鄭">Lv.10 南鄭</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="南鄭縣" data-city="Lv.7成固">Lv.7 成固</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="南鄭縣" data-city="Lv.6裦中">Lv.6 裦中</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">沔陽縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="漢中" data-county="沔陽縣" data-city="Lv.8沔陽">Lv.8 沔陽</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="沔陽縣" data-city="Lv.7南谷口">Lv.7 南谷口</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="沔陽縣" data-city="Lv.6赤岸">Lv.6 赤岸</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">西鄉縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="漢中" data-county="西鄉縣" data-city="Lv.8西鄉">Lv.8 西鄉</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="西鄉縣" data-city="Lv.7興勢">Lv.7 興勢</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="西鄉縣" data-city="Lv.6赤阪">Lv.6 赤阪</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">關卡</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="漢中" data-county="關卡" data-city="Lv.9東狼關">Lv.9 東狼關</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="關卡" data-city="Lv.9陽平關">Lv.9 陽平關</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="關卡" data-city="Lv.9黃金">Lv.9 黃金</a></li>
+                                        <li><a class="city-link" data-region="漢中" data-county="關卡" data-city="Lv.9安橋">Lv.9 安橋</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="" onclick="initializeSubMenu(event)">武都</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">下辨縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="武都" data-county="下辨縣" data-city="Lv.9下辨">Lv.9 下辨</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="下辨縣" data-city="Lv.8沮縣">Lv.8 沮縣</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="下辨縣" data-city="Lv.6武興">Lv.6 武興</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="下辨縣" data-city="Lv.5下辨西寨">Lv.5 下辨西寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">武都縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="武都" data-county="武都縣" data-city="Lv.7武都">Lv.7 武都</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="武都縣" data-city="Lv.6歷城">Lv.6 歷城</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="武都縣" data-city="Lv.6蘭坑">Lv.6 蘭坑</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="武都縣" data-city="Lv.5下辨南寨">Lv.5 武都南寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">白水縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="武都" data-county="白水縣" data-city="Lv.7白水">Lv.7 白水</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="白水縣" data-city="Lv.6白水大寨">Lv.6 白水大寨</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="白水縣" data-city="Lv.5白水西寨">Lv.5 白水西寨</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="白水縣" data-city="Lv.5馬鳴閣">Lv.5 馬鳴閣</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">漢壽縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="武都" data-county="漢壽縣" data-city="Lv.7漢壽">Lv.7 漢壽</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="漢壽縣" data-city="Lv.6關城">Lv.6 關城</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="漢壽縣" data-city="Lv.5漢壽西寨">Lv.5 漢壽西寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">河池縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="武都" data-county="河池縣" data-city="Lv.7河池">Lv.7 河池</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="河池縣" data-city="Lv.6河池大寨">Lv.6 河池大寨</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="河池縣" data-city="Lv.5河池北寨">Lv.5 河池北寨</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="河池縣" data-city="Lv.5河池東寨">Lv.5 河池東寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">關卡</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.9東狼關">Lv.9 東狼關</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.9陽平關">Lv.9 陽平關</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.8漢昌">Lv.8 漢昌</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.8鄠縣">Lv.8 鄠縣</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.7散關">Lv.7 散關</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.7故道">Lv.7 故道</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.7木門">Lv.7 木門</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.7羌道">Lv.7 羌道</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.7橋頭">Lv.7 橋頭</a></li>
+                                        <li><a class="city-link" data-region="武都" data-county="關卡" data-city="Lv.7劍閣">Lv.7 劍閣</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="" onclick="initializeSubMenu(event)">魏興</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">西城縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="魏興" data-county="西城縣" data-city="Lv.9西城">Lv.9 西城</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="西城縣" data-city="Lv.8錫縣">Lv.8 錫縣</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="西城縣" data-city="Lv.6木蘭寨">Lv.6 木蘭寨</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="西城縣" data-city="Lv.5西城北寨">Lv.5 西城北寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">平陽縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="魏興" data-county="平陽縣" data-city="Lv.7平陽">Lv.7 平陽</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="平陽縣" data-city="Lv.6平陽大寨">Lv.6 平陽大寨</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="平陽縣" data-city="Lv.5平陽北寨">Lv.5 平陽北寨</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="平陽縣" data-city="Lv.5平陽東寨">Lv.5 平陽東寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">安陽縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="魏興" data-county="安陽縣" data-city="Lv.7安陽">Lv.7 安陽</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="安陽縣" data-city="Lv.6安陽東寨">Lv.6 安陽東寨</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="安陽縣" data-city="Lv.5安陽北寨">Lv.5 安陽北寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">綏陽縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="魏興" data-county="綏陽縣" data-city="Lv.7綏陽">Lv.7 綏陽</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="綏陽縣" data-city="Lv.6綏陽大寨">Lv.6 綏陽大寨</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="綏陽縣" data-city="Lv.5綏陽東寨">Lv.5 綏陽東寨</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="綏陽縣" data-city="Lv.5綏陽西寨">Lv.5 綏陽西寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">上庸縣</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="魏興" data-county="上庸縣" data-city="Lv.7上庸">Lv.7 上庸</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="上庸縣" data-city="Lv.6建始">Lv.6 建始</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="上庸縣" data-city="Lv.6武陵">Lv.6 武陵</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="上庸縣" data-city="Lv.5上庸北寨">Lv.5 上庸北寨</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="" onclick="toggleSubMenu(event)">關卡</a>
+                                    <ul>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.9黃金">Lv.9 黃金</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.9安橋">Lv.9 安橋</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.8漢昌">Lv.8 漢昌</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.8鄠縣">Lv.8 鄠縣</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.7漢豐">Lv.7 漢豐</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.7北井">Lv.7 北井</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.7昌魏">Lv.7 昌魏</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.7武當">Lv.7 武當</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.7丹水">Lv.7 丹水</a></li>
+                                        <li><a class="city-link" data-region="魏興" data-county="關卡" data-city="Lv.7武關">Lv.7 武關</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            `
+        }; 
+
+        function toggleSubMenu(event) {
+            event.preventDefault();
+            const clickedItem = event.target;
+            const subMenu = clickedItem.nextElementSibling;
+
+            // 切换点击的子选项的展开状态
+            subMenu.classList.toggle('sub-menu');
+        }
+
+        
+        function initializeSubMenu(event) { 
+            event.preventDefault();
+            const clickedItem = event.target;
+            const subMenu = clickedItem.nextElementSibling;
+            
+            // 将其他子菜单收起来，再展开当前子菜单
+            const allSubMenus = document.querySelectorAll('.sub-menu');
+            allSubMenus.forEach(menu => {
+                if (menu !== subMenu) {
+                    menu.classList.remove('active');
+                }
+            });
+
+            subMenu.classList.toggle('active');
+        }
+
+        // 頁面加載時設置首頁內容為“盟友出席率”
+        window.onload = function() {
+            document.querySelector('main').innerHTML = pageHTML['盟友出席率'];
+            setCityHerf();
+        };
+
+        // 導航欄
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // 先把所有的連結移除 active class
+                navLinks.forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // 為被點擊的連結添加 active class
+                link.classList.add('active');
+
+                // 在這裡可以根據點擊的連結做不同的操作，例如更改主要內容
+                const pageTitle = link.textContent;
+
+                // 根據連結的文字內容獲取相應的 HTML 片段
+                const pageContent = pageHTML[pageTitle];
+
+                document.querySelector('main').innerHTML = pageContent;
+
+                // 點到"盟友出席率"頁面後再添加城池路徑
+                if (pageTitle === '盟友出席率') {
+                    setCityHerf();
+                }
+            });
+        });
+
+        // 設置城池連結
+        function setCityHerf() {
+            // 獲取所有具有 'city-link' 類別的連結元素
+            const cityLinks = document.querySelectorAll('.city-link');
+
+            // 遍歷每個城池連結元素
+            cityLinks.forEach(link => {
+                // 監聽連結的點擊事件
+                link.addEventListener('click', function(event) {
+                    // 阻止默認行為，即頁面跳轉
+                    event.preventDefault();
+
+                    // 獲取連結上的城池相關數據
+                    const region = link.getAttribute('data-region');
+                    const county = link.getAttribute('data-county');
+                    const city = link.getAttribute('data-city');
+
+                    // 構建城池路徑
+                    const path = `${region}-${county}-${city}`;
+
+                    // 將城池路徑傳遞給第二個網頁並跳轉
+                    navigateToStatisticsPage(path);
+                });
+            });
+
+            // 跳轉到第二個網頁並傳遞城池路徑
+            function navigateToStatisticsPage(path) {
+                window.location.href = `statistics.html?path=${path}`;
+            }
+        };
+    </script>
+    <!-- 導入Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
